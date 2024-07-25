@@ -1,0 +1,28 @@
+#sidebar {
+    height: 100vh; /* Full height */
+    overflow-y: auto; /* Scrollable content */
+    background-color:  rgb(2, 59, 59); ; /* Teal color */
+    color: white; /* Ensure text color is white for contrast */
+    min-width: 200px;
+    max-width: 200px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0; /* Add padding for better spacing */
+  }
+  
+  .nav-link {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 0; /* Remove default padding */
+    color: white; /* Ensure the text color is white */
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px; /* Ensure space between checkbox and text */
+  }
+  
+  
+  

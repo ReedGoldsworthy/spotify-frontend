@@ -1,0 +1,21 @@
+.navbar {
+    margin-bottom: 20px; /* Space between navbar and content */
+    background-color: teal; /* Teal color */
+  }
+  
+  .navbar-nav {
+    display: flex;
+  }
+  
+  .nav-item {
+    margin-right: 15px; /* Space between nav items */
+  }
+  
+  .nav-link {
+    color: white;
+  }
+  
+  .nav-link.active {
+    background-color: rgb(2, 59, 59); /* Darker teal for active link */
+  }
+  

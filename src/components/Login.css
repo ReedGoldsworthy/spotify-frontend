@@ -1,0 +1,12 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    width: 100vw; /* Full width of the viewport */
+  }
+  
+  .btn {
+    /* Additional button styling if needed */
+  }
+  
