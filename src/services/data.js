@@ -6,20 +6,11 @@ const getPlaylists = () => {
   return axios.get("http://localhost:3001/api/data/playlist");
 };
 
-const getSongs = (token, playlistID) => {
-  return axios
-    .get(`http://localhost:3001/api/data/songs`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+const getSongs = (playlistID) => {
+  return axios.get(
+    // "http://localhost:3001/api/data/playlist/1x6yGPXUrhubpiUTd45fEu"
+    `http://localhost:3001/api/data/playlist/${playlistID}/tracks`
+  );
 };
 
 export default {

@@ -7,49 +7,28 @@ const columns = [
   { field: 'name', headerName: 'name', width: 200 },
   { field: 'album', headerName: 'album', width: 200 },
   { field: 'spotifyID', headerName: 'spotifyID', width: 70 },
+  { field: 'createdAt', headerName: 'createdAt', width: 70 },
   
   { field: 'artist', headerName: 'artist', width: 200 },
-  { field: 'type', headerName: 'type', width: 70 },
-  { field: 'popularity', headerName: 'popularity', width: 70 },
+  { field: 'genre', headerName: 'genre', width: 70 },
   { field: 'release_date', headerName: 'release Date', width: 80 },
-
-//   {
-//     field: 'age',
-//     headerName: 'Age',
-//     type: 'number',
-//     width: 90,
-//   },
-//   {
-//     field: 'name',
-//     headerName: 'name',
-//     type: 'number',
-//     width: 90,
-//   },
-
-//   {
-//     field: 'fullName',
-//     headerName: 'Full name',
-//     description: 'This column has a value getter and is not sortable.',
-//     sortable: false,
-//     width: 160,
-//     valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-//   },
 ];
+
 
 
 export default function DataTable({data}) {
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 500, width: '100%' }}>
       <DataGrid
         rows={data}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[10, 20]}
         checkboxSelection
       />
     </div>

@@ -12,7 +12,7 @@ const Sidebar = ({ selectedPlaylist, onGenreClick, songs }) => {
           <li key={index} className="nav-item d-flex align-items-center">
             <input
               type="checkbox"
-              checked={selectedPlaylist === (song.id)}
+              checked={selectedPlaylist === (song.name)}
                onChange={() => onGenreClick(song)}
               className="mr-2"
             />

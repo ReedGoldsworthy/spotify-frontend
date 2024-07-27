@@ -35,97 +35,19 @@ function App() {
   const [songs, setSongs] = useState([])
 
   
-// sends GET request with access token to spotify api to get playlist data
-const fetchPlaylists = async (accessToken) => {
-  try {
-    const response = await axios.get(
-      "https://api.spotify.com/v1/me/playlists",
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    //const songs = response.data.items.map((song) => console.log(song));
-    return response.data.items
-  } catch (error) {
-    console.error("Error fetching Spotify profile:", error);
-    throw new Error("Failed to fetch Spotify profile");
-  }
-};
-  
 
   const handleGenreClick = async (playlist) => {
 
-     //get users spotify playlists
-    //  const playlists = await fetchPlaylists(token);
-
-     // go through and save each playlist
-    //  for (const playlist of playlists) {
-    //    console.log(playlist)
-    //  }
-
-
-    setPlaylist(playlist.id)
-
-    // dataService
-    // .getPlaylists()
-    // .then(response => {
-    //   // console.log(response.data)
-    //   const tracks = response.data.map(song => song.spotifyId)
-    //   console.log(tracks)
-    //   // const songs = tracks.map( (track,index) => ({
-    //   //   id: index,
-    //   //   playlistID,
-    //   //   name: track.name,
-    //   //   album: track.album.name,
-    //   //   spotifyID: track.id,
-    //   //   artist: track.artists[0].name,
-    //   //   type: track.type,
-    //   //   popularity: track.popularity,
-    //   //   release_date: track.album.release_date
-    //   // }) )
-    
-    //   })
-
-      // try {
-      //   const response = await axios.get(
-      //     `https://api.spotify.com/v1/playlists/${playlist.spotifyId}/tracks`,
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${token}`,
-      //       },
-      //     }
-      //   );
-
-      //   const tracks = response.data.items.map(song => song.track);
-      //   const songs = tracks.map( (track,index) => ({
-      //     id: index,
-      //     playlistID,
-      //     name: track.name,
-      //     album: track.album.name,
-      //     spotifyID: track.id,
-      //     artist: track.artists[0].name,
-      //     type: track.type,
-      //     popularity: track.popularity,
-      //     release_date: track.album.release_date
-      //   }) )
-
-      //   // const songs = tracks.map()
-      
-      
-      //   setSongs(songs)
-      //   console.log(songs)
-      
-
-      // } catch (error) {
-      //   console.log(error)
-        
-      // }
-
+    setPlaylist(playlist.name)
     
 
-    
+      //this service calls our backend with the playlist spotifyID to get the tracks if the playlist is in our db or 
+      // to store the tracks into our db  
+      dataService.getSongs(playlist.spotifyId)
+      .then(response => {
+        setSongs(response.data)
+      })
+       
   };
 
   const handleNavClick = (section) => {
@@ -135,11 +57,6 @@ const fetchPlaylists = async (accessToken) => {
 
   const handleLogout = () => {
     setUsername('')
-  };
-
-  const handleClick = async () => {
-    const data = await fetchPlaylists(token);
-    console.log(data);
   };
 
   
@@ -168,18 +85,16 @@ const fetchPlaylists = async (accessToken) => {
     return (
       <>
       <h1> User: {username}</h1>
-      <button onClick={handleClick} > Fetch playlists</button>
-      
      <div className="d-flex">
       <Sidebar selectedPlaylist={playlist} onGenreClick={handleGenreClick} songs={playlists} />
       <div className="content-wrapper d-flex flex-column">
         <Navbar activeSection={activeSection} onNavClick={handleNavClick} handleLogout={handleLogout} />
         <div className="p-4">
-          <h1>{activeSection}</h1>
+          {/* <h1>{activeSection}</h1> */}
           {/* Content based on activeSection */}
           {activeSection === 'Track List' && playlists &&  <ul>
           {
-            <li>{ playlist }</li>
+            <h1> Showing tracks for : {playlist}</h1>
          }
         </ul>}
           {activeSection === 'Data Visualization' && <div> Access token :  </div>}

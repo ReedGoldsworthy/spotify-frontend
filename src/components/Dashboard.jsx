@@ -9,9 +9,7 @@ const Dashboard = ({ genres, handleNavClick, handleLogout }) => {
         <h1>{activeSection}</h1>
         {/* Content based on activeSection */}
         {activeSection === 'Track List' && <ul>
-        {selectedGenres.map((genre, index) => (
-          <li key={index}>{genre}</li>
-        ))}
+        
       </ul>}
         {activeSection === 'Data Visualization' && <div>Data Visualization Content</div>}
         {activeSection === 'Create' && <div>Create Content</div>}
