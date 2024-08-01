@@ -6,10 +6,9 @@ const getPlaylists = () => {
   return axios.get("http://localhost:3001/api/data/playlist");
 };
 
-const getSongs = (playlistID) => {
+const getSongs = (userID, playlistID) => {
   return axios.get(
-    // "http://localhost:3001/api/data/playlist/1x6yGPXUrhubpiUTd45fEu"
-    `http://localhost:3001/api/data/playlist/${playlistID}/tracks`
+    `http://localhost:3001/api/data/${userID}/playlist/${playlistID}/tracks`
   );
 };
 

@@ -10,10 +10,13 @@ import dataService from './services/data'
 import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
+import LoadingScreen from './components/loadingScreen';
+
 import Login from './components/Login'
 import DataTable from './components/DataTable';
 import './App.css';
 import { stepButtonClasses } from '@mui/material';
+
 
 const user = new URLSearchParams(window.location.search).get('user')
 const access_token = new URLSearchParams(window.location.search).get('access_token')
@@ -21,9 +24,6 @@ const access_token = new URLSearchParams(window.location.search).get('access_tok
 function App() {
   const [selectedPlaylists, setSelectedPlaylist] = useState([]);
   const [activeSection, setActiveSection] = useState('Track List');
-
-  // const refresh_token = new URLSearchParams(window.location.search).get('refresh_token');
-  // const expires_in = new URLSearchParams(window.location.search).get('expires_in');
 
   const [username, setUsername] = useState('');
   const [refresh, setRefresh] = useState('');
@@ -33,6 +33,7 @@ function App() {
   const [playlist, setPlaylist] = useState('');
   const [token, setToken] = useState('');
   const [songs, setSongs] = useState([])
+  const [loading, setLoading] = useState(true)
 
   
 
@@ -40,14 +41,17 @@ function App() {
 
     setPlaylist(playlist.name)
     
-
-      //this service calls our backend with the playlist spotifyID to get the tracks if the playlist is in our db or 
-      // to store the tracks into our db  
-      dataService.getSongs(playlist.spotifyId)
+    //render loading circle while playlist tracks are retrieved
+    setLoading(true)
+    
+      //this service calls our backend with the users name and the playlist spotifyID to
+      // either retrieve the playlist tracks from the DB or store them into our DB  
+      dataService.getSongs(username, playlist.spotifyId)
       .then(response => {
         setSongs(response.data)
+        setLoading(false)
       })
-       
+      
   };
 
   const handleNavClick = (section) => {
@@ -61,6 +65,7 @@ function App() {
 
   
 
+  //after returning from login & authorization, sets user and retrieves user's playlists for the sidebar
   useEffect(() => {
     if (user) {
       setUsername(user)
@@ -70,7 +75,6 @@ function App() {
       dataService
         .getPlaylists()
         .then(response => {
-          // console.log(response.data)
         setPlaylists(response.data)
     })
     }
@@ -100,7 +104,7 @@ function App() {
           {activeSection === 'Data Visualization' && <div> Access token :  </div>}
           {activeSection === 'Create' && <div>Create Content</div>}
           {activeSection === 'Logout' && <div>Logout</div>}
-          <DataTable data={songs}/>
+          {loading ? <LoadingScreen/> : <DataTable data={songs}/>}
         </div>
        
       </div>
