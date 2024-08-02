@@ -15,6 +15,7 @@ import LoadingScreen from './components/loadingScreen';
 import Login from './components/Login'
 import DataTable from './components/DataTable';
 import './App.css';
+import { Container } from 'react-bootstrap';
 import { stepButtonClasses } from '@mui/material';
 
 
@@ -22,18 +23,14 @@ const user = new URLSearchParams(window.location.search).get('user')
 const access_token = new URLSearchParams(window.location.search).get('access_token')
 
 function App() {
-  const [selectedPlaylists, setSelectedPlaylist] = useState([]);
   const [activeSection, setActiveSection] = useState('Track List');
 
   const [username, setUsername] = useState('');
-  const [refresh, setRefresh] = useState('');
-  const [expiresIn, setExpiresIn] = useState('');
   const [playlists, setPlaylists] = useState([]);
-  const [playlistID, setPlaylistID ] = useState('')
   const [playlist, setPlaylist] = useState('');
   const [token, setToken] = useState('');
   const [songs, setSongs] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   
 
@@ -63,8 +60,6 @@ function App() {
     setUsername('')
   };
 
-  
-
   //after returning from login & authorization, sets user and retrieves user's playlists for the sidebar
   useEffect(() => {
     if (user) {
@@ -93,19 +88,27 @@ function App() {
       <Sidebar selectedPlaylist={playlist} onGenreClick={handleGenreClick} songs={playlists} />
       <div className="content-wrapper d-flex flex-column">
         <Navbar activeSection={activeSection} onNavClick={handleNavClick} handleLogout={handleLogout} />
+        <Container >
         <div className="p-4">
-          {/* <h1>{activeSection}</h1> */}
-          {/* Content based on activeSection */}
-          {activeSection === 'Track List' && playlists &&  <ul>
-          {
-            <h1> Showing tracks for : {playlist}</h1>
-         }
-        </ul>}
-          {activeSection === 'Data Visualization' && <div> Access token :  </div>}
+
+          {activeSection === 'Track List' && playlists && (
+            <div>
+               <ul>
+                <h1 style={{marginBottom: '20px'}}> Showing tracks for : {playlist}</h1>
+              </ul>
+              {loading ? <LoadingScreen/> : <DataTable data={songs}/>}
+            </div>
+          )}
+         
+          {activeSection === 'Data Visualization' && (
+            <button> click me to get data</button>
+            )}
           {activeSection === 'Create' && <div>Create Content</div>}
           {activeSection === 'Logout' && <div>Logout</div>}
-          {loading ? <LoadingScreen/> : <DataTable data={songs}/>}
+          
         </div>
+        </Container>
+        
        
       </div>
     </div>
