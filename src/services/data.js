@@ -18,13 +18,8 @@ const getInfo = (userID, playlistID) => {
   );
 };
 
-const getGenres = (userID) => {
-  return axios.get(`http://localhost:3001/api/data/${userID}/playlist/genres`);
-};
-
 export default {
   getPlaylists: getPlaylists,
   getSongs: getSongs,
   getInfo: getInfo,
-  getGenres: getGenres,
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { Container, Typography, Paper } from '@mui/material';
+import { Container, Typography, Paper, Button, IconButton } from '@mui/material';
+import { ExpandMore, ExpandLess } from '@mui/icons-material';
 
 const transformToDecades = (years) => {
   const decades = {};
@@ -19,46 +20,60 @@ const transformToDecades = (years) => {
   }));
 };
 
-
-export default function YearsBox({years}) {
-
+export default function YearsBox({ years }) {
   const [dataName, setDataName] = useState('YEAR');
-  const [data, setData] = useState(years)
+  const [data, setData] = useState([]);
+  const [isMinimized, setIsMinimized] = useState(false);
+
+  useEffect(() => {
+    // Update data based on the current dataName
+    if (dataName === 'YEAR') {
+      setData(years);
+    } else {
+      setData(transformToDecades(years));
+    }
+  }, [dataName, years]);
 
   const handleClick = () => {
-  
-    if (dataName === "YEAR") {
-      setDataName('DECADE')
-      setData(transformToDecades)
-    } else {
-      setDataName("YEAR")
-      setData(years)
-    }
-  }
-  
+    setDataName(prevDataName => (prevDataName === 'YEAR' ? 'DECADE' : 'YEAR'));
+  };
 
-  if (!years) {return}
-  
+  const handleMinimizeClick = () => {
+    setIsMinimized(prev => !prev);
+  };
 
-
-// const data = transformToDecades(years);
-
+  // Check if the data is available before rendering
+  if (!data || !Array.isArray(data)) return null;
 
   return (
-    <>
-    <Container component={Paper} style={{ padding: 16 }}>
-      <button onClick={handleClick}>Click me to cycle between year and decade</button>
-      <Typography variant="h6" gutterBottom>
-        Song Count by {dataName}
-      </Typography>
-      <BarChart
-        xAxis={[{ scaleType: 'band', data: data.map(item => item.releaseYear) }]}
-        series={[{ data: data.map(item => item.count) }]}
-        width={500}
-        height={300}
-      />
+    <Container component={Paper} style={{ padding: 16, position: 'relative' }}>
+      <IconButton
+        onClick={handleMinimizeClick}
+        sx={{
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          zIndex: 1,
+        }}
+      >
+        {isMinimized ? <ExpandMore /> : <ExpandLess />}
+      </IconButton>
+      {!isMinimized && (
+        <>
+          <Button onClick={handleClick} variant="contained" color="primary">
+            Click me to cycle between year and decade
+          </Button>
+          <Typography variant="h6" gutterBottom>
+            Song Count by {dataName}
+          </Typography>
+          <BarChart
+            xAxis={[{ scaleType: 'band', data: data.map(item => item.releaseYear) }]}
+            series={[{ data: data.map(item => item.count) }]}
+            width={500}
+            height={300}
+          />
+        </>
+      )}
     </Container>
-    </>
-    
   );
 }

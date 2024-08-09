@@ -3,15 +3,20 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
 
-  { field: 'id', headerName: 'id', width: 140 },
-  { field: 'name', headerName: 'name', width: 200 },
+
+  { field: 'name', headerName: 'name', width: 180 },
+  { field: 'artist', headerName: 'artist', width: 180 },
   { field: 'album', headerName: 'album', width: 200 },
-  { field: 'spotifyID', headerName: 'spotifyID', width: 70 },
-  { field: 'createdAt', headerName: 'createdAt', width: 70 },
+  { field: 'release_date', headerName: 'release Date', width: 100 },
+
+  { field: 'acousticness', headerName: 'acousticness', width: 80 },
+  { field: 'danceability', headerName: 'danceability', width: 80 },
+  { field: 'duration', headerName: 'duration', width: 80 },
+  { field: 'energy', headerName: 'energy', width: 80 },
+  { field: 'instrumentalness', headerName: 'instrumentalness', width: 80 },
+  { field: 'valence', headerName: 'valence', width: 80 },
   
-  { field: 'artist', headerName: 'artist', width: 200 },
-  { field: 'genre', headerName: 'genre', width: 70 },
-  { field: 'release_date', headerName: 'release Date', width: 80 },
+  // { field: 'genres', headerName: 'genre', width: 200 },
 ];
 
 

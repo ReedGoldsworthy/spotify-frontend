@@ -6,6 +6,7 @@ import axios from 'axios'
 import noteService from './services/notes'
 import loginService from './services/login'
 import dataService from './services/data'
+import AttributeBox from './components/AttributesBox'
 
 import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
