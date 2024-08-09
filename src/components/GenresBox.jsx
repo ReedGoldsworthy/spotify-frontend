@@ -1,59 +1,63 @@
-import React, { useState } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, IconButton } from '@mui/material';
-import { ExpandMore, ExpandLess } from '@mui/icons-material';
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import { PieChart } from '@mui/x-charts';
 
-const GenresBox = ({ genres = [] }) => {
-  const [isMinimized, setIsMinimized] = useState(false);
+const GenresBox = ({ genres }) => {
+  // Calculate total count
+  const total = genres.reduce((sum, genre) => sum + genre.count, 0);
 
-  // Convert object values to an array and get the first five elements
-  const topGenres = Object.values(genres).slice(0, 5);
+  // Prepare data for the PieChart
+  const data = genres.map((genre) => ({
+    name: genre._id,
+    value: genre.count,
+    label: genre._id, // Label text will be replaced by arcLabel function
+  }));
+
+  // Custom function to format arc labels
+  const arcLabel = (slice) => {
+    const percentage = ((slice.value / total) * 100).toFixed(1);
+    return `(${percentage}%)`;
+  };
 
   return (
     <Box
       sx={{
+        width: '100%',
+        maxWidth: '600px',
+        height: 'auto',
         border: '6px solid teal',
         borderRadius: '12px',
         padding: '16px',
-        maxWidth: '600px',
         margin: 'auto',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        overflow: 'hidden', // Hide any overflowing content
       }}
     >
-      <Box sx={{ position: 'relative' }}>
-        <IconButton
-          onClick={() => setIsMinimized(prev => !prev)}
-          sx={{
-            position: 'absolute',
-            top: '8px',
-            right: '8px',
-            zIndex: 1,
-          }}
-        >
-          {isMinimized ? <ExpandMore /> : <ExpandLess />}
-        </IconButton>
-        {!isMinimized && (
-          <>
-            <Typography variant="h6" gutterBottom>
-              Your Top Genres For This Playlist
-            </Typography>
-            <List>
-              {topGenres.map((genre, index) => (
-                <ListItem 
-                  key={index} 
-                  sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between' 
-                  }}
-                >
-                  <ListItemText primary={genre._id} />
-                  <ListItemText 
-                    primary={`Count: ${genre.count}`} 
-                    sx={{ textAlign: 'right' }} 
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </>
-        )}
+      <Typography variant="h6" gutterBottom>
+        Genres Distribution
+      </Typography>
+
+      <Box
+        sx={{
+          width: '100%', // Ensure the chart takes full width of the container
+          height: 250,
+          maxWidth: '100%',
+          position: 'relative',
+        }}
+      >
+        <PieChart
+          series={[
+            {
+              data: data,
+              arcLabel: arcLabel, // Use the custom arcLabel function
+            },
+          ]}
+          width={400} // Set a fixed width
+          height={250} // Set a fixed height
+        />
       </Box>
     </Box>
   );
