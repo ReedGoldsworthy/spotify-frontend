@@ -1,6 +1,6 @@
 #sidebar {
     height: 100vh; /* Full height */
-    overflow-y: auto; /* Scrollable content */
+    overflow-y: auto; /*Scrollable content*/
     background-color:  rgb(2, 59, 59); ; /* Teal color */
     color: white; /* Ensure text color is white for contrast */
     min-width: 200px;

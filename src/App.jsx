@@ -108,7 +108,7 @@ function App() {
      <div className="d-flex">
       <Sidebar selectedPlaylist={playlist.name} onGenreClick={handleGenreClick} songs={playlists} />
       <div className="content-wrapper d-flex flex-column">
-        <Navbar activeSection={activeSection} onNavClick={handleNavClick} handleLogout={handleLogout} />
+        <Navbar  activeSection={activeSection} onNavClick={handleNavClick} handleLogout={handleLogout} />
         <Container >
         <div className="p-4">
 
@@ -123,8 +123,15 @@ function App() {
          
           {activeSection === 'Data Visualization' && (
             <div>
-            <h1 style={{marginBottom: '20px'}}> Showing analysis for : {playlist.name}</h1>
-            <h3> ----{info.numTracks} Tracks     {info.numArtists} Artists----</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                <h1 style={{ margin: 0, marginRight: '35px' }}>Showing analysis for: {playlist.name}</h1>
+                <div style={{marginRight: '40px', display: 'flex'}}> 
+                  <h3 style={{marginLeft: '0px',marginRight: '15px'}}>{info.numTracks} Tracks </h3>
+                  <h3> {info.numArtists} Artists </h3>
+                </div>
+                
+            </div>
+            
             <DataDisplay info = {info}></DataDisplay>
             
             </div>
