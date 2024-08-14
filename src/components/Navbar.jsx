@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 
-const Navbar = ({ activeSection, onNavClick, handleLogout }) => {
+const Navbar = ({ activeSection, onNavClick, handleLogout, stagedTracksCount }) => {
   return (
     <nav className="navbar navbar-expand navbar-dark">
       <div className="container-fluid">
@@ -28,6 +28,9 @@ const Navbar = ({ activeSection, onNavClick, handleLogout }) => {
               onClick={() => onNavClick('Create')}
             >
               Create
+              {stagedTracksCount > 0 && (
+                <span className="indicator">{stagedTracksCount}</span>
+              )}
             </button>
           </li>
           <li className="nav-item">

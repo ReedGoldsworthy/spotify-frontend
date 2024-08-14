@@ -1,24 +1,32 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    
-  }
-  
-  #root {
-    height: 100%;
-  }
-  
-  .d-flex {
-    height: 100%;
-  }
-  
-  .content-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .content-wrapper .navbar {
-    margin-bottom: 20px; /* Space between navbar and content */
-  }
-  
+/* Ensure the app container takes up the full height of the viewport */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Flex container to hold Sidebar and content */
+.main-wrapper {
+  display: flex;
+  flex: 1;
+  height: 100%; /* Ensure the flex container takes full height */
+}
+
+/* Sidebar styling */
+.Sidebar {
+  flex: 0 0 250px; /* Adjust width as needed */
+  background-color: rgb(2, 59, 59);
+  color: white;
+  height: 100%;
+  position: relative; /* Ensure it takes full height */
+}
+
+/* Content area styling */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%; /* Ensure the content area takes full height */
+}
+

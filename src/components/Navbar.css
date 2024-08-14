@@ -1,21 +1,34 @@
 .navbar {
-    margin-bottom: 20px; /* Space between navbar and content */
-    background-color: teal; /* Teal color */
-  }
-  
-  .navbar-nav {
-    display: flex;
-  }
-  
-  .nav-item {
-    margin-right: 15px; /* Space between nav items */
-  }
-  
-  .nav-link {
-    color: white;
-  }
-  
-  .nav-link.active {
-    background-color: rgb(2, 59, 59); /* Darker teal for active link */
-  }
-  
+  margin-bottom: 20px; /* Space between navbar and content */
+  background-color: teal; /* Teal color */
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 15px; /* Space between nav items */
+}
+
+.nav-link {
+  color: white;
+  position: relative; /* Required for positioning the indicator */
+}
+
+.nav-link.active {
+  background-color: rgb(2, 59, 59); /* Darker teal for active link */
+}
+
+.indicator {
+  background-color: #ff5722; /* Orange color for the indicator */
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 12px;
+  position: absolute;
+  top: 0; /* Position at the top */
+  right: 0; /* Position at the right */
+  transform: translate(50%, -50%); /* Adjust for corner placement */
+  display: inline-block;
+}
