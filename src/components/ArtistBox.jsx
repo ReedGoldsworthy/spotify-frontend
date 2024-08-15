@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, IconButton, Divider } from '@mui/material';
+import { Box, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, IconButton, Divider, TextField } from '@mui/material';
 import { ExpandMore, ExpandLess, ArrowLeft, ArrowRight } from '@mui/icons-material';
 
 const ArtistBox = ({ artists = [] }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerPage = 6;
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const itemsPerPage = 10;
   const totalArtists = Object.values(artists).length;
-  const topArtists = Object.values(artists).slice(currentIndex, currentIndex + itemsPerPage);
+  const topArtists = Object.values(artists).filter(artist =>
+    artist.artist.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handlePrev = () => {
     setCurrentIndex(prevIndex => Math.max(prevIndex - itemsPerPage, 0));
@@ -26,139 +30,155 @@ const ArtistBox = ({ artists = [] }) => {
       sx={{
         border: '6px solid teal',
         borderRadius: '12px',
-        padding: '16px',
         maxWidth: '600px',
         margin: 'auto',
         position: 'relative',
-        overflow: 'hidden', // Ensure overflow is hidden for better handling of small screens
+        transition: 'max-height 0.3s ease', // Smooth transition for height change
+        maxHeight: isMinimized ? '100px' : '630px', // Change height based on minimized state
+        overflow: 'hidden', // Hide overflow to maintain the visual effect
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      <IconButton
-        onClick={() => setIsMinimized(prev => !prev)}
-        sx={{
-          position: 'absolute',
-          top: '8px',
-          right: '8px',
-          zIndex: 1,
-        }}
-      >
-        {isMinimized ? <ExpandMore /> : <ExpandLess />}
-      </IconButton>
+      {/* Fixed Header and Divider */}
       <Box
         sx={{
-          position: 'absolute',
-          top: '8px',
-          left: '8px',
+          padding: '16px',
+          paddingTop: '30px', // Add padding top to ensure it's not overlapped by the buttons
+          paddingBottom: '20px',
           display: 'flex',
-          flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: 'white', // Ensure background color is applied
+          borderBottom: '5px solid teal', // Border bottom to separate header from content
           zIndex: 1,
-          gap: '0px', // Reduced margin between arrows
+          position: 'relative',
         }}
       >
-        <IconButton 
-          onClick={handlePrev} 
-          disabled={currentIndex === 0}
-          sx={{ 
-            fontSize: '2rem', // Increased font size for larger arrows
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 'bold',
+            fontSize: '1.5rem',
           }}
         >
-          <ArrowLeft />
-        </IconButton>
-        <IconButton 
-          onClick={handleNext} 
-          disabled={currentIndex >= totalArtists - itemsPerPage}
-          sx={{ 
-            fontSize: '2rem', // Increased font size for larger arrows
+          Your Top Artists For This Playlist
+        </Typography>
+        <TextField
+          variant="outlined"
+          placeholder="Search artists"
+          size="small"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ width: '200px' }}
+        />
+        <IconButton
+          onClick={() => setIsMinimized(prev => !prev)}
+          sx={{
+            position: 'absolute',
+            top: '8px',
+            right: '8px',
+            zIndex: 2,
           }}
         >
-          <ArrowRight />
+          {isMinimized ? <ExpandMore /> : <ExpandLess />}
         </IconButton>
       </Box>
+
+ 
+
+      {/* Navigation Arrows */}
       {!isMinimized && (
-        <>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              mb: '16px',
-              mt: '20px', // Add margin top to ensure title is not overlapped
-              paddingLeft: '56px', // Adjust padding to avoid overlap with the buttons
-              paddingRight: '56px', // Adjust padding to avoid overlap with the buttons
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '0 16px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          <IconButton 
+            onClick={handlePrev} 
+            disabled={currentIndex === 0}
+            sx={{ 
+              fontSize: '2rem', // Increased font size for larger arrows
             }}
           >
-            <Box
-              sx={{
-                padding: '8px',
-                borderRadius: '8px',
-                display: 'inline-block',
-               
+            <ArrowLeft />
+          </IconButton>
+          <IconButton 
+            onClick={handleNext} 
+            disabled={currentIndex >= totalArtists - itemsPerPage}
+            sx={{ 
+              fontSize: '2rem', // Increased font size for larger arrows
+            }}
+          >
+            <ArrowRight />
+          </IconButton>
+        </Box>
+      )}
+
+      {/* Scrollable Content */}
+      <Box
+        sx={{
+          paddingTop: "20px",
+          padding: '16px',
+          overflowY: 'auto', // Enable vertical scrolling
+          flexGrow: 1, // Allow the content to grow and fill the available space
+          boxSizing: 'border-box', // Ensure padding and border are included in the height
+        }}
+      >
+        <List>
+          {topArtists.slice(currentIndex, currentIndex + itemsPerPage).map((artist, index) => (
+            <ListItem 
+              key={index} 
+              sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between',
+                mt: index > 0 ? '8px' : '0', // Margin between items except the first one
               }}
             >
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: '1.5rem',
-                }}
-              >
-                Your Top Artists For This Playlist
-              </Typography>
-            </Box>
-          </Box>
-          <Divider sx={{ borderColor: 'teal', mb: '16px', borderWidth: '5px' }} />
-          <List>
-            {topArtists.map((artist, index) => (
-              <ListItem 
-                key={index} 
-                sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between',
-                  mt: index > 0 ? '8px' : '0', // Margin between items except the first one
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar 
-                    src={artist.artist_image || '/default-image.png'} // Provide a default image if artist_image is not available
-                    alt={artist.artist} 
-                    sx={{ width: 64, height: 64 }}
-                  />
-                </ListItemAvatar>
-                <ListItemText 
-                  primary={
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        marginLeft: '20px',
-                        fontWeight: 'bold',
-                        fontSize: '1.4rem', // Slightly increase the font size
-                      }}
-                    >
-                      {artist.artist}
-                    </Typography>
-                  }
+              <ListItemAvatar>
+                <Avatar 
+                  src={artist.artist_image || '/default-image.png'} // Provide a default image if artist_image is not available
+                  alt={artist.artist} 
+                  sx={{ width: 64, height: 64 }}
                 />
-                <ListItemText 
-                  primary={
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: 'bold',
-                        fontSize: '1.4rem', // Match the font size of artist.artist
-                        textAlign: 'right',
-                      }}
-                    >
-                      {`Count: ${artist.count}`}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </>
-      )}
+              </ListItemAvatar>
+              <ListItemText 
+                primary={
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      marginLeft: '20px',
+                      fontWeight: 'bold',
+                      fontSize: '1.4rem', // Slightly increase the font size
+                    }}
+                  >
+                    {artist.artist}
+                  </Typography>
+                }
+              />
+              <ListItemText 
+                primary={
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 'bold',
+                      fontSize: '1.4rem', // Match the font size of artist.artist
+                      textAlign: 'right',
+                    }}
+                  >
+                    {`Count: ${artist.count}`}
+                  </Typography>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 };

@@ -8,13 +8,15 @@ const columns = [
   { field: 'artist', headerName: 'Artist', width: 180 },
   { field: 'album', headerName: 'Album', width: 200 },
   { field: 'release_date', headerName: 'Release Date', width: 100 },
-  { field: 'acousticness', headerName: 'Acousticness', type: 'number', width: 80 },
+  { field: 'acousticness', headerName: 'Acousticness', type: 'number', width: 100 },
   { field: 'danceability', headerName: 'Danceability', type: 'number', width: 80 },
   { field: 'duration', headerName: 'Duration', type: 'number', width: 80 },
   { field: 'energy', headerName: 'Energy', type: 'number', width: 80 },
   { field: 'instrumentalness', headerName: 'Instrumentalness', type: 'number', width: 80 },
   { field: 'valence', headerName: 'Valence', type: 'number', width: 80 },
   { field: 'popularity', headerName: 'Popularity', type: 'number', width: 80 },
+  { field: 'genres', headerName: 'genres', type: 'string',hide: true,  width: 80 },
+  
 ];
 
 export default function DataTable({ data, handleStagedTracks }) {
@@ -43,6 +45,11 @@ export default function DataTable({ data, handleStagedTracks }) {
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 },
+          },
+          columns: {
+            columnVisibilityModel: {
+              genres: false, // Initially hide the genres column
+            },
           },
         }}
         slots={{ toolbar: CustomToolbarWithProps }} // Use the custom toolbar here

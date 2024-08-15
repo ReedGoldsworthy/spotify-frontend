@@ -14,10 +14,15 @@
 .nav-link {
   color: white;
   position: relative; /* Required for positioning the indicator */
+  padding: 10px; /* Add padding to ensure there's space for the indicators */
 }
 
 .nav-link.active {
   background-color: rgb(2, 59, 59); /* Darker teal for active link */
+}
+
+.indicator-container {
+  position: relative; /* Establish a containing block for absolute positioning */
 }
 
 .indicator {
@@ -29,6 +34,25 @@
   position: absolute;
   top: 0; /* Position at the top */
   right: 0; /* Position at the right */
-  transform: translate(50%, -50%); /* Adjust for corner placement */
+  transform: translate(100%, -100%); /* Adjust for corner placement */
   display: inline-block;
 }
+
+.clear-button {
+  background-color: #004d4d; /* Orange color for the button */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  position: absolute;
+  top: 0; /* Position at the top */
+  left: 0; /* Position at the left */
+  transform: translate(-100%, -100%); /* Adjust for corner placement */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px; /* Size of the minus sign */
+  cursor: pointer;
+}
+

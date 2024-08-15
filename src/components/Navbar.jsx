@@ -1,7 +1,12 @@
 import React from 'react';
 import './Navbar.css';
 
-const Navbar = ({ activeSection, onNavClick, handleLogout, stagedTracksCount }) => {
+const Navbar = ({ activeSection, onNavClick, handleLogout, stagedTracksCount, clearStagedTracks }) => {
+  const handleClearClick = (event) => {
+    event.stopPropagation(); // Prevents the event from reaching the parent button
+    clearStagedTracks();
+  };
+
   return (
     <nav className="navbar navbar-expand navbar-dark">
       <div className="container-fluid">
@@ -27,10 +32,13 @@ const Navbar = ({ activeSection, onNavClick, handleLogout, stagedTracksCount }) 
               className={`nav-link btn ${activeSection === 'Create' ? 'active' : ''}`}
               onClick={() => onNavClick('Create')}
             >
-              Create
               {stagedTracksCount > 0 && (
-                <span className="indicator">{stagedTracksCount}</span>
+                <div className='indicator-container'>
+                  <span className="clear-button" onClick={handleClearClick}>–</span>
+                  <span className="indicator">{stagedTracksCount}</span>
+                </div>
               )}
+              Create
             </button>
           </li>
           <li className="nav-item">
