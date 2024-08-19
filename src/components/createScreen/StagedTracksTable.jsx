@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
-import CustomToolbar from './CustomToolbar';
+import CustomToolbar from '../tracklistScreen/CustomToolbar';
 
 export default function StagedTracksTable({ data, handleStagedTracks, removeTrack }) {
   const handleRemove = (id) => {

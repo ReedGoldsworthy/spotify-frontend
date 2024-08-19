@@ -18,6 +18,10 @@ const getInfo = (userID, playlistID) => {
   );
 };
 
+const getLikedSongs = (userID) => {
+  return axios.get(`http://localhost:3001/api/data/${userID}/likedsongs`);
+};
+
 const postPlaylist = async (
   userID,
   newPlaylistName,
@@ -47,5 +51,6 @@ export default {
   getPlaylists: getPlaylists,
   getSongs: getSongs,
   getInfo: getInfo,
+  getLikedSongs: getLikedSongs,
   postPlaylist: postPlaylist,
 };

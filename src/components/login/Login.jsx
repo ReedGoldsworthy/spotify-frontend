@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container } from "react-bootstrap"
 import './Login.css';
-import loginService from '../services/login'
+import loginService from '../../services/login'
 import axios from 'axios';
 
 const AUTH_URL = 
@@ -17,10 +17,8 @@ export default function Login() {
     <Container className="d-flex justify-content-center align-items-center"
     style={{minHeight: "100vh"}}
     >
-      <a className="btn btn-success btn-lg" href={AUTH_URL}>
-        Login With Spotify
-      </a>
-      <button onClick={handleButtonClick}>Fetch Data</button>
+  
+      <button className='btn btn-success btn-lg' onClick={handleButtonClick}>Login With Spotify</button>
    
      
     </Container>

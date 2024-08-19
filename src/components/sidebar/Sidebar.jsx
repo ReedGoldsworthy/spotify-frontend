@@ -1,9 +1,8 @@
 import React from 'react';
 import './Sidebar.css';
 
-const genres = ['Rock', 'Pop', 'Jazz', 'Classical', 'Hip-hop', 'Electronic'];
-
 const Sidebar = ({ selectedPlaylist, onGenreClick, songs }) => {
+
   return (
     <nav id="sidebar" className="p-3">
       <h4>Playlists</h4>
@@ -25,6 +24,7 @@ const Sidebar = ({ selectedPlaylist, onGenreClick, songs }) => {
             </span>
           </li>
         ))}
+         
       </ul>
     </nav>
   );
